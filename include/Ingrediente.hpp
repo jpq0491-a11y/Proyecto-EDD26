@@ -10,29 +10,21 @@ private:
     std::string cantidad;
 
 public:
-    Ingrediente() : nombre(""), cantidad("") {}
-    Ingrediente(std::string n, std::string c) : nombre(n), cantidad(c) {}
+    Ingrediente();
+    Ingrediente(std::string n, std::string c);
 
-    std::string getNombre() const { return nombre; }
-    std::string getCantidad() const { return cantidad; }
+    std::string getNombre() const;
+    std::string getCantidad() const;
 
-    void setNombre(std::string n) { nombre = n; }
-    void setCantidad(std::string c) { cantidad = c; }
+    void setNombre(std::string n);
+    void setCantidad(std::string c);
 
-    bool operator==(const Ingrediente& otro) const {
-        return nombre == otro.nombre;
-    }
-    bool operator<(const Ingrediente& otro) const {
-        return nombre < otro.nombre;
-    }
-    bool operator>(const Ingrediente& otro) const {
-        return nombre > otro.nombre;
-    }
+    // Operadores requeridos por lista_2.hpp
+    bool operator==(const Ingrediente& otro) const;
+    bool operator<(const Ingrediente& otro) const;
+    bool operator>(const Ingrediente& otro) const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Ingrediente& i) {
-        os << "- " << i.nombre << ": " << i.cantidad;
-        return os;
-    }
+    friend std::ostream& operator<<(std::ostream& os, const Ingrediente& i);
 };
 
 #endif

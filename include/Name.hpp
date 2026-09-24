@@ -10,27 +10,17 @@ private:
     std::string apellido;
 
 public:
-    Name() : nombre(""), apellido("") {}
-    Name(std::string n, std::string a) : nombre(n), apellido(a) {}
+    Name();
+    Name(std::string n, std::string a);
 
-    std::string getNombre() const { 
-        return nombre; 
-    }
-    std::string getApellido() const { 
-        return apellido; 
-    }
+    std::string getNombre() const;
+    std::string getApellido() const;
 
-    void setNombre(std::string n) { 
-        nombre = n; 
-    }
-    void setApellido(std::string a) { 
-        apellido = a; 
-    }
+    void setNombre(std::string n);
+    void setApellido(std::string a);
 
-    friend std::ostream& operator<<(std::ostream& os, const Name& n) {
-        os << n.nombre << " " << n.apellido;
-        return os;
-    }
+    // Sobrecarga para imprimir directamente con cout
+    friend std::ostream& operator<<(std::ostream& os, const Name& n);
 };
 
 #endif
