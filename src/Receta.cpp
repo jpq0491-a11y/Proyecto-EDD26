@@ -27,6 +27,28 @@ bool Receta::agregarPaso(const Paso& paso) {
     return procedimiento.insert(paso, procedimiento.lastPos() + 1);
 }
 
+bool Receta::eliminarIngrediente(int indice) { return listaIngredientes.remove(indice); }
+bool Receta::eliminarPaso(int indice) { return procedimiento.remove(indice); }
+
+bool Receta::modificarIngrediente(int indice, const Ingrediente& ingrediente) {
+    if (indice < 0 || indice >= cantidadIngredientes()) return false;
+    listaIngredientes.remove(indice);
+    return listaIngredientes.insert(ingrediente, indice);
+}
+
+bool Receta::modificarPaso(int indice, const Paso& paso) {
+    if (indice < 0 || indice >= cantidadPasos()) return false;
+    procedimiento.remove(indice);
+    return procedimiento.insert(paso, indice);
+}
+
+void Receta::vaciarIngredientes() { listaIngredientes.clear(); }
+void Receta::vaciarPasos() { procedimiento.clear(); }
+int Receta::cantidadIngredientes() const { return listaIngredientes.lastPos() + 1; }
+int Receta::cantidadPasos() const { return procedimiento.lastPos() + 1; }
+Ingrediente Receta::obtenerIngrediente(int indice) const { return listaIngredientes.retrieve(indice); }
+Paso Receta::obtenerPaso(int indice) const { return procedimiento.retrieve(indice); }
+
 // IMPLEMENTACIÓN QUE SOLUCIONA TU ERROR
 void Receta::mostrarIngredientes() const {
     if (listaIngredientes.isEmpty()) {
@@ -50,8 +72,12 @@ void Receta::mostrarRecetaCompleta() const {
     mostrarIngredientes();
 
     std::cout << "\nProcedimiento:\n";
+    if (procedimiento.isEmpty()) {
+        std::cout << "  No hay pasos agregados.\n";
+        return;
+    }
     for (int i = 0; i <= procedimiento.lastPos(); i++) {
-        std::cout << procedimiento.retrieve(i) << "\n";
+        std::cout << i + 1 << ". " << procedimiento.retrieve(i) << "\n";
     }
 }
 

@@ -1,11 +1,10 @@
 #ifndef USERINTERFACE_HPP
 #define USERINTERFACE_HPP
 
-#include "Recetario.hpp"
+#include "ServicioRecetario.hpp"
 #include "Name.hpp"
 #include "Ingrediente.hpp"
 #include "Paso.hpp"
-#include <windows.h>
 #include <iostream>
 #include <string>
 #include <cctype> // Para la función toupper()
@@ -13,7 +12,7 @@
 
 class UserInterface {
 private:
-    Recetario gestorRecetas; // El motor que administra la lista de recetas
+    ServicioRecetario gestorRecetas;
 
     // Métodos privados para uso interno de la interfaz
     void pausarPantalla();
@@ -23,6 +22,9 @@ private:
     void menuAdministrarRecetas();
     void menuGuardarRecetario();
     void menuCargarRecetario();
+    void mostrarRecetasYSeleccionar();
+    void administrarIngredientes(int indiceReceta);
+    void modificarReceta(int indiceReceta);
     void limpiarPantalla();
 
 public:

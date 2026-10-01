@@ -36,6 +36,16 @@ public:
     // Métodos para interactuar con las listas
     bool agregarIngrediente(const Ingrediente& ing);
     bool agregarPaso(const Paso& paso);
+    bool eliminarIngrediente(int indice);
+    bool eliminarPaso(int indice);
+    bool modificarIngrediente(int indice, const Ingrediente& ingrediente);
+    bool modificarPaso(int indice, const Paso& paso);
+    void vaciarIngredientes();
+    void vaciarPasos();
+    int cantidadIngredientes() const;
+    int cantidadPasos() const;
+    Ingrediente obtenerIngrediente(int indice) const;
+    Paso obtenerPaso(int indice) const;
     
     // MÉTODO QUE FALTABA
     void mostrarIngredientes() const;
