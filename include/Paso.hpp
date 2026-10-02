@@ -19,7 +19,7 @@ public:
     void setNumero(int num);
     void setInstruccion(std::string inst);
 
-    // Operadores requeridos por lista_2.hpp
+    // Operadores de comparacion usados por List (busqueda y ordenamiento)
     bool operator==(const Paso& otro) const;
     bool operator<(const Paso& otro) const;
     bool operator>(const Paso& otro) const;

@@ -19,7 +19,7 @@ public:
     void setNombre(std::string n);
     void setCantidad(std::string c);
 
-    // Operadores requeridos por lista_2.hpp
+    // Operadores de comparacion usados por List (busqueda y ordenamiento)
     bool operator==(const Ingrediente& otro) const;
     bool operator<(const Ingrediente& otro) const;
     bool operator>(const Ingrediente& otro) const;

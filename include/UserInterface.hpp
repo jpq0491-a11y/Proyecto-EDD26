@@ -8,7 +8,6 @@
 #include <iostream>
 #include <string>
 #include <cctype> // Para la función toupper()
-#include <locale> // Para la función setlocale()
 
 class UserInterface {
 private:

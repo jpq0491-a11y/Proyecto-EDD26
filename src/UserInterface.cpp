@@ -1,13 +1,27 @@
 #include "UserInterface.hpp"
+#include <cstdlib>
 #include <limits>
 
 namespace {
+// Si la entrada se cerro (EOF / Ctrl+Z) ya no se puede leer nada: se termina el programa
+// en lugar de quedarse en un ciclo infinito pidiendo datos.
+void verificarFinDeEntrada() {
+    if (std::cin.eof()) {
+        std::cout << "\nFin de la entrada. Saliendo del programa...\n";
+        std::exit(0);
+    }
+}
+
 bool leerEntero(int& valor) {
     if (std::cin >> valor) {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         return true;
     }
 
+    verificarFinDeEntrada();
+    // Al fallar la lectura, cin deja valor en 0, que en los menus significa "Salir/Regresar".
+    // Se usa -1 para que ningun menu lo interprete como una opcion valida.
+    valor = -1;
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "Entrada invalida. Escribe un numero.\n";
@@ -15,7 +29,7 @@ bool leerEntero(int& valor) {
 }
 
 bool leerRespuestaSiNo(char& respuesta) {
-    std::cin >> respuesta;
+    if (!(std::cin >> respuesta)) verificarFinDeEntrada();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     respuesta = static_cast<char>(std::toupper(static_cast<unsigned char>(respuesta)));
     if (respuesta != 'S' && respuesta != 'N') {
@@ -29,7 +43,7 @@ std::string leerTextoNoVacio(const std::string& mensaje) {
     std::string texto;
     do {
         std::cout << mensaje;
-        std::getline(std::cin, texto);
+        if (!std::getline(std::cin, texto)) verificarFinDeEntrada();
         if (texto.empty()) std::cout << "Este dato no puede quedar vacio.\n";
     } while (texto.empty());
     return texto;
@@ -80,7 +94,6 @@ void UserInterface::pausarPantalla() {
 }
 
 void UserInterface::iniciarPrograma() {
-    std::setlocale(LC_ALL, ""); 
     int opcion;
     do {
         limpiarPantalla();
@@ -113,7 +126,6 @@ void UserInterface::iniciarPrograma() {
 }
 
 void UserInterface::menuAgregarReceta() {
-    std::setlocale(LC_ALL, ""); 
     std::string nombreReceta, autorNombre, autorApellido, catStr;
     int tiempo;
     limpiarPantalla();
@@ -273,7 +285,12 @@ void UserInterface::modificarReceta(int indiceReceta) {
         if (!leerEntero(opcion)) { pausarPantalla(); continue; }
         if (opcion == 1) receta.setNombre(leerTextoNoVacio("Nuevo nombre:\n> "));
         else if (opcion == 2) { std::cout << "Nueva categoria:\n"; receta.setCategoria(seleccionarCategoria(false)); }
-        else if (opcion == 3) receta.setAutor(Name(leerTextoNoVacio("Nombres:\n> "), leerTextoNoVacio("Apellidos:\n> ")));
+        else if (opcion == 3) {
+            // Se leen por separado: el orden de evaluacion de los argumentos de una funcion no esta garantizado
+            std::string nombres = leerTextoNoVacio("Nombres:\n> ");
+            std::string apellidos = leerTextoNoVacio("Apellidos:\n> ");
+            receta.setAutor(Name(nombres, apellidos));
+        }
         else if (opcion == 4) {
             int tiempo;
             do { std::cout << "Nuevo tiempo en minutos:\n> "; } while (!leerEntero(tiempo) || tiempo <= 0);
@@ -325,7 +342,9 @@ void UserInterface::administrarIngredientes(int indiceReceta) {
         std::cout << "\n1. Agregar ingrediente\n2. Eliminar ingrediente\n3. Eliminar todos\n4. Modificar cantidad\n0. Guardar y regresar\n> ";
         if (!leerEntero(opcion)) continue;
         if (opcion == 1) {
-            Ingrediente ingrediente(leerTextoNoVacio("Ingrediente:\n> "), leerTextoNoVacio("Cantidad:\n> "));
+            std::string nombre = leerTextoNoVacio("Ingrediente:\n> ");
+            std::string cantidad = leerTextoNoVacio("Cantidad:\n> ");
+            Ingrediente ingrediente(nombre, cantidad);
             if (!receta.agregarIngrediente(ingrediente)) std::cout << "Se alcanzo el limite de 50 ingredientes.\n";
         } else if (opcion == 2 || opcion == 4) {
             int indice;

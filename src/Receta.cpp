@@ -49,16 +49,14 @@ int Receta::cantidadPasos() const { return procedimiento.lastPos() + 1; }
 Ingrediente Receta::obtenerIngrediente(int indice) const { return listaIngredientes.retrieve(indice); }
 Paso Receta::obtenerPaso(int indice) const { return procedimiento.retrieve(indice); }
 
-// IMPLEMENTACIÓN QUE SOLUCIONA TU ERROR
+// Muestra los ingredientes numerados desde 1
 void Receta::mostrarIngredientes() const {
     if (listaIngredientes.isEmpty()) {
         std::cout << "  No hay ingredientes agregados.\n";
         return;
     }
-    // Iteramos sobre la lista de ingredientes usando la lógica de lista_2.hpp
     for (int i = 0; i <= listaIngredientes.lastPos(); i++) {
-        // Al imprimir "listaIngredientes.retrieve(i)", se invoca automáticamente 
-        // la sobrecarga operator<< de tu clase Ingrediente
+        // Usa la sobrecarga operator<< de Ingrediente
         std::cout << i + 1 << ". " << listaIngredientes.retrieve(i) << "\n";
     }
 }

@@ -47,7 +47,7 @@ public:
     Ingrediente obtenerIngrediente(int indice) const;
     Paso obtenerPaso(int indice) const;
     
-    // MÉTODO QUE FALTABA
+    // Visualización
     void mostrarIngredientes() const;
     
     void mostrarRecetaCompleta() const;
