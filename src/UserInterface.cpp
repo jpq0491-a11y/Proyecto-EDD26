@@ -374,23 +374,46 @@ void UserInterface::menuAdministrarRecetas() {
     do {
         limpiarPantalla();
         std::cout << "=== ADMINISTRAR RECETAS ===\n1. Modificar receta\n2. Eliminar receta\n3. Administrar ingredientes\n4. Eliminar todas las recetas\n0. Regresar\n> ";
-        if (!leerEntero(opcion)) { pausarPantalla(); continue; }
+        if (!leerEntero(opcion)) {
+            pausarPantalla();
+            continue;
+        }
         if (opcion >= 1 && opcion <= 3) {
             int indice = seleccionarIndice(gestorRecetas.obtenerRecetario(), "Selecciona una receta");
-            if (indice == -1) { pausarPantalla(); continue; }
-            if (opcion == 1) modificarReceta(indice);
-            else if (opcion == 2) {
-                char respuesta;
-                do { std::cout << "¿Eliminar esta receta? (S/N): "; } while (!leerRespuestaSiNo(respuesta));
-                if (respuesta == 'S') { std::string mensaje; gestorRecetas.eliminarReceta(indice, mensaje); std::cout << mensaje << "\n"; }
+            if (indice == -1) {
                 pausarPantalla();
-            } else administrarIngredientes(indice);
+                continue;
+            }
+            if (opcion == 1) {
+                modificarReceta(indice);
+            } else if (opcion == 2) {
+                char respuesta;
+                do {
+                    std::cout << "¿Eliminar esta receta? (S/N): ";
+                } while (!leerRespuestaSiNo(respuesta));
+                if (respuesta == 'S') {
+                    std::string mensaje;
+                    gestorRecetas.eliminarReceta(indice, mensaje);
+                    std::cout << mensaje << "\n";
+                }
+                pausarPantalla();
+            } else {
+                administrarIngredientes(indice);
+            }
         } else if (opcion == 4) {
             char respuesta;
-            do { std::cout << "Esta accion eliminara todo el recetario. ¿Continuar? (S/N): "; } while (!leerRespuestaSiNo(respuesta));
-            if (respuesta == 'S') { gestorRecetas.vaciarRecetario(); std::cout << "Recetario eliminado.\n"; }
+            do {
+                std::cout << "Esta accion eliminara todo el recetario. ¿Continuar? (S/N): ";
+            } while (!leerRespuestaSiNo(respuesta));
+            if (respuesta == 'S') {
+                gestorRecetas.vaciarRecetario();
+                std::cout << "Recetario eliminado.\n";
+            }
             pausarPantalla();
-        } else if (opcion != 0) { std::cout << "Opcion invalida.\n"; pausarPantalla(); }
+        } else if (opcion != 0) {
+            std::cout << "Opcion invalida.\n";
+            pausarPantalla();
+        }
     } while (opcion != 0);
 }
 
@@ -400,25 +423,47 @@ void UserInterface::menuGuardarRecetario() {
     std::cout << "Se guardaran " << cantidad << " recetas.\n";
     std::string nombre = leerTextoNoVacio("Nombre del archivo:\n> ");
     char respuesta;
-    do { std::cout << "¿Guardar recetario? (S/N): "; } while (!leerRespuestaSiNo(respuesta));
-    if (respuesta == 'S') { std::string mensaje; gestorRecetas.guardar(nombre, mensaje); std::cout << mensaje << "\n"; }
-    else std::cout << "Operacion cancelada.\n";
+    do {
+        std::cout << "¿Guardar recetario? (S/N): ";
+    } while (!leerRespuestaSiNo(respuesta));
+    if (respuesta == 'S') {
+        std::string mensaje;
+        gestorRecetas.guardar(nombre, mensaje);
+        std::cout << mensaje << "\n";
+    } else {
+        std::cout << "Operacion cancelada.\n";
+    }
     pausarPantalla();
 }
 
 void UserInterface::menuCargarRecetario() {
     limpiarPantalla();
     std::vector<std::string> archivos = gestorRecetas.archivosDisponibles();
-    if (archivos.empty()) { std::cout << "No hay archivos de recetario disponibles.\n"; pausarPantalla(); return; }
+    if (archivos.empty()) {
+        std::cout << "No hay archivos de recetario disponibles.\n";
+        pausarPantalla();
+        return;
+    }
     std::cout << "=== RECETARIOS DISPONIBLES ===\n";
-    for (std::size_t i = 0; i < archivos.size(); ++i) std::cout << i + 1 << ". " << archivos[i] << "\n";
+    for (std::size_t i = 0; i < archivos.size(); ++i) {
+        std::cout << i + 1 << ". " << archivos[i] << "\n";
+    }
     int opcion;
-    do { std::cout << "Selecciona un archivo (0 para cancelar): "; } while (!leerEntero(opcion) || opcion < 0 || opcion > static_cast<int>(archivos.size()));
+    do {
+        std::cout << "Selecciona un archivo (0 para cancelar): ";
+    } while (!leerEntero(opcion) || opcion < 0 || opcion > static_cast<int>(archivos.size()));
     if (opcion == 0) return;
     char respuesta;
-    do { std::cout << "Cargar este recetario reemplazara el actual. ¿Continuar? (S/N): "; } while (!leerRespuestaSiNo(respuesta));
-    if (respuesta == 'S') { std::string mensaje; gestorRecetas.cargar(archivos[opcion - 1], mensaje); std::cout << mensaje << "\n"; }
-    else std::cout << "Operacion cancelada.\n";
+    do {
+        std::cout << "Cargar este recetario reemplazara el actual. ¿Continuar? (S/N): ";
+    } while (!leerRespuestaSiNo(respuesta));
+    if (respuesta == 'S') {
+        std::string mensaje;
+        gestorRecetas.cargar(archivos[opcion - 1], mensaje);
+        std::cout << mensaje << "\n";
+    } else {
+        std::cout << "Operacion cancelada.\n";
+    }
     pausarPantalla();
 }
 
