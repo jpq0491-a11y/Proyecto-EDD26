@@ -1,4 +1,5 @@
 #include "Name.hpp"
+#include <iomanip>
 
 Name::Name() : nombre(""), apellido("") {}
 
@@ -13,4 +14,13 @@ void Name::setApellido(std::string a) { apellido = a; }
 std::ostream& operator<<(std::ostream& os, const Name& n) {
     os << n.nombre << " " << n.apellido;
     return os;
+}
+
+std::istream& operator>>(std::istream& is, Name& n) {
+    std::string nombre, apellido;
+    if (is >> std::quoted(nombre) >> std::quoted(apellido)) {
+        n.nombre = nombre;
+        n.apellido = apellido;
+    }
+    return is;
 }

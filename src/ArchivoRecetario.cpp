@@ -77,35 +77,10 @@ bool ArchivoRecetario::cargar(const std::string& nombreArchivo, Recetario& recet
 
     Recetario cargado;
     for (int i = 0; i < totalRecetas; ++i) {
-        std::string nombre, categoria, nombresAutor, apellidosAutor;
-        int tiempo, totalIngredientes, totalPasos;
-        if (!(entrada >> std::quoted(nombre) >> std::quoted(categoria) >> std::quoted(nombresAutor)
-              >> std::quoted(apellidosAutor) >> tiempo >> totalIngredientes) || tiempo <= 0 ||
-              totalIngredientes < 0 || totalIngredientes > 50) {
+        Receta receta;
+        if (!(entrada >> receta)) {
             mensaje = "El archivo contiene datos de receta invalidos.";
             return false;
-        }
-        Receta receta(nombre, categoria, Name(nombresAutor, apellidosAutor), tiempo);
-        for (int j = 0; j < totalIngredientes; ++j) {
-            std::string nombreIngrediente, cantidad;
-            if (!(entrada >> std::quoted(nombreIngrediente) >> std::quoted(cantidad)) ||
-                !receta.agregarIngrediente(Ingrediente(nombreIngrediente, cantidad))) {
-                mensaje = "El archivo contiene ingredientes invalidos.";
-                return false;
-            }
-        }
-        if (!(entrada >> totalPasos) || totalPasos < 0 || totalPasos > 50) {
-            mensaje = "El archivo contiene pasos invalidos.";
-            return false;
-        }
-        for (int j = 0; j < totalPasos; ++j) {
-            int numero;
-            std::string instruccion;
-            if (!(entrada >> numero >> std::quoted(instruccion)) ||
-                !receta.agregarPaso(Paso(numero, instruccion))) {
-                mensaje = "El archivo contiene pasos invalidos.";
-                return false;
-            }
         }
         if (!cargado.agregarReceta(receta)) {
             mensaje = "El archivo contiene recetas duplicadas.";

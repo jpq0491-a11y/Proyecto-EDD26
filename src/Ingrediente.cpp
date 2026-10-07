@@ -1,4 +1,5 @@
 #include "Ingrediente.hpp"
+#include <iomanip>
 
 Ingrediente::Ingrediente() : nombre(""), cantidad("") {}
 
@@ -23,4 +24,13 @@ bool Ingrediente::operator>(const Ingrediente& otro) const {
 std::ostream& operator<<(std::ostream& os, const Ingrediente& i) {
     os << i.nombre << ": " << i.cantidad;
     return os;
+}
+
+std::istream& operator>>(std::istream& is, Ingrediente& i) {
+    std::string nombre, cantidad;
+    if (is >> std::quoted(nombre) >> std::quoted(cantidad)) {
+        i.nombre = nombre;
+        i.cantidad = cantidad;
+    }
+    return is;
 }

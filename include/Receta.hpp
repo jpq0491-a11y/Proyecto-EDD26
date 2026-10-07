@@ -56,6 +56,10 @@ public:
     bool operator==(const Receta& otra) const;
     bool operator<(const Receta& otra) const;
     bool operator>(const Receta& otra) const;
+
+    // Deserializacion: lee una receta completa (datos, ingredientes y pasos)
+    // en el formato del archivo de recetario. Si los datos son invalidos, activa failbit.
+    friend std::istream& operator>>(std::istream& is, Receta& r);
 };
 
 #endif

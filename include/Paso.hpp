@@ -25,6 +25,8 @@ public:
     bool operator>(const Paso& otro) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Paso& p);
+    // Deserializacion: lee numero "instruccion" (formato del archivo de recetario)
+    friend std::istream& operator>>(std::istream& is, Paso& p);
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "Paso.hpp"
+#include <iomanip>
 
 Paso::Paso() : numero(0), instruccion("") {}
 
@@ -17,4 +18,14 @@ bool Paso::operator>(const Paso& otro) const { return numero > otro.numero; }
 std::ostream& operator<<(std::ostream& os, const Paso& p) {
     os << p.instruccion; // Imprime solo la instrucción, el número ya se maneja en el formato
     return os;
+}
+
+std::istream& operator>>(std::istream& is, Paso& p) {
+    int numero;
+    std::string instruccion;
+    if (is >> numero >> std::quoted(instruccion)) {
+        p.numero = numero;
+        p.instruccion = instruccion;
+    }
+    return is;
 }

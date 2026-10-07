@@ -1,4 +1,5 @@
 #include "Receta.hpp"
+#include <iomanip>
 
 // Constructores
 Receta::Receta() : nombre(""), categoria(""), tiempoPreparacion(0) {}
@@ -83,3 +84,37 @@ void Receta::mostrarRecetaCompleta() const {
 bool Receta::operator==(const Receta& otra) const { return nombre == otra.nombre; }
 bool Receta::operator<(const Receta& otra) const { return nombre < otra.nombre; }
 bool Receta::operator>(const Receta& otra) const { return nombre > otra.nombre; }
+
+
+// Deserializacion: la receta solo se modifica si se leyo completa y valida
+std::istream& operator>>(std::istream& is, Receta& r) {
+    std::string nombre, categoria;
+    Name autor;
+    int tiempo, totalIngredientes, totalPasos;
+    if (!(is >> std::quoted(nombre) >> std::quoted(categoria) >> autor >> tiempo >> totalIngredientes) ||
+        tiempo <= 0 || totalIngredientes < 0 || totalIngredientes > 50) {
+        is.setstate(std::ios::failbit);
+        return is;
+    }
+    Receta leida(nombre, categoria, autor, tiempo);
+    for (int j = 0; j < totalIngredientes; ++j) {
+        Ingrediente ingrediente;
+        if (!(is >> ingrediente) || !leida.agregarIngrediente(ingrediente)) {
+            is.setstate(std::ios::failbit);
+            return is;
+        }
+    }
+    if (!(is >> totalPasos) || totalPasos < 0 || totalPasos > 50) {
+        is.setstate(std::ios::failbit);
+        return is;
+    }
+    for (int j = 0; j < totalPasos; ++j) {
+        Paso paso;
+        if (!(is >> paso) || !leida.agregarPaso(paso)) {
+            is.setstate(std::ios::failbit);
+            return is;
+        }
+    }
+    r = leida;
+    return is;
+}
