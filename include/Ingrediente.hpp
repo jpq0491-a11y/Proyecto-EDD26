@@ -25,6 +25,8 @@ public:
     bool operator>(const Ingrediente& otro) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Ingrediente& i);
+    // Serializacion: escribe "nombre" "cantidad" (formato del archivo de recetario)
+    void serializar(std::ostream& os) const;
     // Deserializacion: lee "nombre" "cantidad" (formato del archivo de recetario)
     friend std::istream& operator>>(std::istream& is, Ingrediente& i);
 };

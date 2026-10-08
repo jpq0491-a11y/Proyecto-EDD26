@@ -21,6 +21,8 @@ public:
 
     // Sobrecarga para imprimir directamente con cout
     friend std::ostream& operator<<(std::ostream& os, const Name& n);
+    // Serializacion: escribe "nombre" "apellido" (formato del archivo de recetario)
+    void serializar(std::ostream& os) const;
     // Deserializacion: lee "nombre" "apellido" (formato del archivo de recetario)
     friend std::istream& operator>>(std::istream& is, Name& n);
 };

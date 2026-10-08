@@ -20,6 +20,10 @@ std::ostream& operator<<(std::ostream& os, const Paso& p) {
     return os;
 }
 
+void Paso::serializar(std::ostream& os) const {
+    os << numero << ' ' << std::quoted(instruccion);
+}
+
 std::istream& operator>>(std::istream& is, Paso& p) {
     int numero;
     std::string instruccion;

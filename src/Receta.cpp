@@ -90,6 +90,23 @@ bool Receta::operator<(const Receta& otra) const { return nombre < otra.nombre; 
 bool Receta::operator>(const Receta& otra) const { return nombre > otra.nombre; }
 
 
+// Serializacion: escribe la receta en el mismo orden en que operator>> la lee
+void Receta::serializar(std::ostream& os) const {
+    os << std::quoted(nombre) << ' ' << std::quoted(categoria) << ' ';
+    autor.serializar(os);
+    os << ' ' << tiempoPreparacion << '\n';
+    os << cantidadIngredientes() << '\n';
+    for (int i = 0; i < cantidadIngredientes(); ++i) {
+        listaIngredientes.retrieve(i).serializar(os);
+        os << '\n';
+    }
+    os << cantidadPasos() << '\n';
+    for (int i = 0; i < cantidadPasos(); ++i) {
+        procedimiento.retrieve(i).serializar(os);
+        os << '\n';
+    }
+}
+
 // Deserializacion: la receta solo se modifica si se leyo completa y valida
 std::istream& operator>>(std::istream& is, Receta& r) {
     std::string nombre, categoria;

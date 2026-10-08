@@ -40,21 +40,7 @@ bool ArchivoRecetario::guardar(const Recetario& recetario, const std::string& no
 
     salida << "RECETARIO_V1\n" << recetario.cantidadRecetas() << '\n';
     for (int i = 0; i < recetario.cantidadRecetas(); ++i) {
-        Receta receta = recetario.obtenerReceta(i);
-        Name autor = receta.getAutor();
-        salida << std::quoted(receta.getNombre()) << ' ' << std::quoted(receta.getCategoria()) << ' '
-               << std::quoted(autor.getNombre()) << ' ' << std::quoted(autor.getApellido()) << ' '
-               << receta.getTiempoPreparacion() << '\n';
-        salida << receta.cantidadIngredientes() << '\n';
-        for (int j = 0; j < receta.cantidadIngredientes(); ++j) {
-            Ingrediente ingrediente = receta.obtenerIngrediente(j);
-            salida << std::quoted(ingrediente.getNombre()) << ' ' << std::quoted(ingrediente.getCantidad()) << '\n';
-        }
-        salida << receta.cantidadPasos() << '\n';
-        for (int j = 0; j < receta.cantidadPasos(); ++j) {
-            Paso paso = receta.obtenerPaso(j);
-            salida << paso.getNumero() << ' ' << std::quoted(paso.getInstruccion()) << '\n';
-        }
+        recetario.obtenerReceta(i).serializar(salida);
     }
     if (!salida) {
         mensaje = "Ocurrio un error al escribir el recetario.";

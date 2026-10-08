@@ -16,6 +16,10 @@ std::ostream& operator<<(std::ostream& os, const Name& n) {
     return os;
 }
 
+void Name::serializar(std::ostream& os) const {
+    os << std::quoted(nombre) << ' ' << std::quoted(apellido);
+}
+
 std::istream& operator>>(std::istream& is, Name& n) {
     std::string nombre, apellido;
     if (is >> std::quoted(nombre) >> std::quoted(apellido)) {

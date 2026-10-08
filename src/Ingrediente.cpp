@@ -26,6 +26,10 @@ std::ostream& operator<<(std::ostream& os, const Ingrediente& i) {
     return os;
 }
 
+void Ingrediente::serializar(std::ostream& os) const {
+    os << std::quoted(nombre) << ' ' << std::quoted(cantidad);
+}
+
 std::istream& operator>>(std::istream& is, Ingrediente& i) {
     std::string nombre, cantidad;
     if (is >> std::quoted(nombre) >> std::quoted(cantidad)) {
