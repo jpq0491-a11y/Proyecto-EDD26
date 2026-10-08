@@ -46,10 +46,10 @@ public:
     int cantidadPasos() const;
     Ingrediente obtenerIngrediente(int indice) const;
     Paso obtenerPaso(int indice) const;
-    
+
     // Visualización
     void mostrarIngredientes() const;
-    
+
     void mostrarRecetaCompleta() const;
 
     // Sobrecargas para ordenamientos

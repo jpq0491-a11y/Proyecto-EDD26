@@ -11,14 +11,14 @@ std::string Ingrediente::getCantidad() const { return cantidad; }
 void Ingrediente::setNombre(std::string n) { nombre = n; }
 void Ingrediente::setCantidad(std::string c) { cantidad = c; }
 
-bool Ingrediente::operator==(const Ingrediente& otro) const { 
-    return nombre == otro.nombre; 
+bool Ingrediente::operator==(const Ingrediente& otro) const {
+    return nombre == otro.nombre;
 }
-bool Ingrediente::operator<(const Ingrediente& otro) const { 
-    return nombre < otro.nombre; 
+bool Ingrediente::operator<(const Ingrediente& otro) const {
+    return nombre < otro.nombre;
 }
-bool Ingrediente::operator>(const Ingrediente& otro) const { 
-    return nombre > otro.nombre; 
+bool Ingrediente::operator>(const Ingrediente& otro) const {
+    return nombre > otro.nombre;
 }
 
 std::ostream& operator<<(std::ostream& os, const Ingrediente& i) {

@@ -22,7 +22,9 @@ bool Recetario::agregarReceta(const Receta& nuevaReceta) {
 }
 
 bool Recetario::reemplazarReceta(int indice, const Receta& recetaActualizada) {
-    if (indice < 0 || indice >= cantidadRecetas()) return false;
+    if (indice < 0 || indice >= cantidadRecetas()) {
+        return false;
+    }
 
     for (int i = 0; i < cantidadRecetas(); ++i) {
         if (i != indice && normalizar(listaRecetas.retrieve(i).getNombre()) == normalizar(recetaActualizada.getNombre())) {
@@ -44,7 +46,7 @@ void Recetario::mostrarTodas() const {
     for (int i = 0; i <= listaRecetas.lastPos(); i++) {
         Receta r = listaRecetas.retrieve(i);
         // Se imprime i+1 para que el usuario vea la lista iniciando en 1
-        std::cout << i + 1 << " | " << r.getNombre() << " | " 
+        std::cout << i + 1 << " | " << r.getNombre() << " | "
                   << r.getCategoria() << " | " << r.getTiempoPreparacion() << " min\n";
     }
 }
@@ -55,7 +57,7 @@ void Recetario::filtrarPorCategoria(const std::string& categoria) const {
     for (int i = 0; i <= listaRecetas.lastPos(); i++) {
         Receta r = listaRecetas.retrieve(i);
         if (normalizar(r.getCategoria()) == normalizar(categoria)) {
-            std::cout << i + 1 << " | " << r.getNombre() << " | " 
+            std::cout << i + 1 << " | " << r.getNombre() << " | "
                       << r.getTiempoPreparacion() << " min\n";
             encontrada = true;
         }

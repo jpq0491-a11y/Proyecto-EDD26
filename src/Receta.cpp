@@ -4,7 +4,7 @@
 // Constructores
 Receta::Receta() : nombre(""), categoria(""), tiempoPreparacion(0) {}
 
-Receta::Receta(std::string n, std::string cat, Name aut, int tiempo) 
+Receta::Receta(std::string n, std::string cat, Name aut, int tiempo)
     : nombre(n), categoria(cat), autor(aut), tiempoPreparacion(tiempo) {}
 
 // Getters
@@ -32,13 +32,17 @@ bool Receta::eliminarIngrediente(int indice) { return listaIngredientes.remove(i
 bool Receta::eliminarPaso(int indice) { return procedimiento.remove(indice); }
 
 bool Receta::modificarIngrediente(int indice, const Ingrediente& ingrediente) {
-    if (indice < 0 || indice >= cantidadIngredientes()) return false;
+    if (indice < 0 || indice >= cantidadIngredientes()) {
+        return false;
+    }
     listaIngredientes.remove(indice);
     return listaIngredientes.insert(ingrediente, indice);
 }
 
 bool Receta::modificarPaso(int indice, const Paso& paso) {
-    if (indice < 0 || indice >= cantidadPasos()) return false;
+    if (indice < 0 || indice >= cantidadPasos()) {
+        return false;
+    }
     procedimiento.remove(indice);
     return procedimiento.insert(paso, indice);
 }
@@ -64,9 +68,9 @@ void Receta::mostrarIngredientes() const {
 
 void Receta::mostrarRecetaCompleta() const {
     std::cout << "\n=== " << nombre << " ===\n";
-    std::cout << "Categoria: " << categoria << " | Autor: " << autor 
+    std::cout << "Categoria: " << categoria << " | Autor: " << autor
               << " | Tiempo: " << tiempoPreparacion << " min\n";
-    
+
     std::cout << "\nIngredientes:\n";
     mostrarIngredientes();
 

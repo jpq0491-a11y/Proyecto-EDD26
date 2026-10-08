@@ -128,7 +128,9 @@ T List<T, MAX>::retrieve(int pos) const {
 // Get first position
 template <typename T, int MAX>
 int List<T, MAX>::first() const {
-    if (isEmpty()) return -1;
+    if (isEmpty()) {
+        return -1;
+    }
     return 0;
 }
 
@@ -141,14 +143,18 @@ int List<T, MAX>::lastPos() const {
 // Get previous position
 template <typename T, int MAX>
 int List<T, MAX>::previous(int pos) const {
-    if (pos <= 0 || pos > last) return -1;
+    if (pos <= 0 || pos > last) {
+        return -1;
+    }
     return pos - 1;
 }
 
 // Get next position
 template <typename T, int MAX>
 int List<T, MAX>::next(int pos) const {
-    if (pos < 0 || pos >= last) return -1;
+    if (pos < 0 || pos >= last) {
+        return -1;
+    }
     return pos + 1;
 }
 
@@ -218,26 +224,28 @@ int List<T, MAX>::findDataB(const T& e) const {
 // ShellSort Implementation
 template <typename T, int MAX>
 void List<T, MAX>::shellSort() {
-    if (isEmpty()) return;
-    
-    float factor = 0.5; 
-    int dif = (last + 1) * factor; 
-    
-    while (dif > 0) { 
-        int i = dif; 
-        
-        while (i <= last) { 
-            int j = i; 
-            
+    if (isEmpty()) {
+        return;
+    }
+
+    float factor = 0.5;
+    int dif = (last + 1) * factor;
+
+    while (dif > 0) {
+        int i = dif;
+
+        while (i <= last) {
+            int j = i;
+
             while (j >= dif && elements[j - dif] > elements[j]) {
-                
+
                 T temp = elements[j - dif];
                 elements[j - dif] = elements[j];
                 elements[j] = temp;
-                
-                j = j - dif; 
+
+                j = j - dif;
             }
-            i = i + 1; 
+            i = i + 1;
         }
         dif = dif * factor;
     }
@@ -245,23 +253,25 @@ void List<T, MAX>::shellSort() {
 // Insertion Sort Implementation
 template <typename T, int MAX>
 void List<T, MAX>::insertSort() {
-    if (isEmpty()) return;
-    
-    int i = 1; 
-    while (i <= last) { 
-        T aux = elements[i]; 
-        int j = i; 
+    if (isEmpty()) {
+        return;
+    }
+
+    int i = 1;
+    while (i <= last) {
+        T aux = elements[i];
+        int j = i;
 
         while (j > 0 && aux < elements[j - 1]) {
-            elements[j] = elements[j - 1]; 
-            j = j - 1; 
+            elements[j] = elements[j - 1];
+            j = j - 1;
         }
-        
-        if (i != j) { 
-            elements[j] = aux; 
+
+        if (i != j) {
+            elements[j] = aux;
         }
-        
-        i = i + 1; 
+
+        i = i + 1;
     }
 }
 

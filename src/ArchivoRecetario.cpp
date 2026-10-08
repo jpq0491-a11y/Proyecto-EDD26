@@ -12,7 +12,9 @@ bool nombreValido(const std::string& nombre) {
 
 std::filesystem::path rutaArchivo(const std::string& nombre) {
     std::string archivo = nombre;
-    if (std::filesystem::path(archivo).extension() != ".txt") archivo += ".txt";
+    if (std::filesystem::path(archivo).extension() != ".txt") {
+        archivo += ".txt";
+    }
     return DIRECTORIO_RECETARIOS / archivo;
 }
 }
@@ -95,7 +97,9 @@ bool ArchivoRecetario::cargar(const std::string& nombreArchivo, Recetario& recet
 std::vector<std::string> ArchivoRecetario::listarArchivos() const {
     std::vector<std::string> archivos;
     std::error_code error;
-    if (!std::filesystem::exists(DIRECTORIO_RECETARIOS, error)) return archivos;
+    if (!std::filesystem::exists(DIRECTORIO_RECETARIOS, error)) {
+        return archivos;
+    }
     for (const auto& entrada : std::filesystem::directory_iterator(DIRECTORIO_RECETARIOS, error)) {
         if (!error && entrada.is_regular_file() && entrada.path().extension() == ".txt") {
             archivos.push_back(entrada.path().filename().string());
