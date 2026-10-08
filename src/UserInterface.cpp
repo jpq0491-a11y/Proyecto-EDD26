@@ -29,9 +29,7 @@ bool leerEntero(int& valor) {
 }
 
 bool leerRespuestaSiNo(char& respuesta) {
-    if (!(std::cin >> respuesta)) {
-        verificarFinDeEntrada();
-    }
+    if (!(std::cin >> respuesta)) verificarFinDeEntrada();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     respuesta = static_cast<char>(std::toupper(static_cast<unsigned char>(respuesta)));
     if (respuesta != 'S' && respuesta != 'N') {
@@ -45,12 +43,8 @@ std::string leerTextoNoVacio(const std::string& mensaje) {
     std::string texto;
     do {
         std::cout << mensaje;
-        if (!std::getline(std::cin, texto)) {
-            verificarFinDeEntrada();
-        }
-        if (texto.empty()) {
-            std::cout << "Este dato no puede quedar vacio.\n";
-        }
+        if (!std::getline(std::cin, texto)) verificarFinDeEntrada();
+        if (texto.empty()) std::cout << "Este dato no puede quedar vacio.\n";
     } while (texto.empty());
     return texto;
 }
@@ -59,23 +53,15 @@ std::string seleccionarCategoria(bool permitirCancelar) {
     int opcion;
     do {
         std::cout << "[1] Desayuno\n[2] Comida\n[3] Cena\n[4] Navideño\n";
-        if (permitirCancelar) {
-            std::cout << "[0] Regresar\n";
-        }
+        if (permitirCancelar) std::cout << "[0] Regresar\n";
         std::cout << "> ";
-        if (!leerEntero(opcion)) {
-            continue;
-        }
+        if (!leerEntero(opcion)) continue;
         switch (opcion) {
             case 1: return "Desayuno";
             case 2: return "Comida";
             case 3: return "Cena";
             case 4: return "Navideño";
-            case 0:
-                if (permitirCancelar) {
-                    return "";
-                }
-                break;
+            case 0: if (permitirCancelar) return ""; break;
         }
         std::cout << "Opcion invalida.\n";
     } while (true);
@@ -90,15 +76,9 @@ int seleccionarIndice(const Recetario& recetario, const std::string& mensaje) {
     int opcion;
     do {
         std::cout << mensaje << " (0 para regresar): ";
-        if (!leerEntero(opcion)) {
-            continue;
-        }
-        if (opcion == 0) {
-            return -1;
-        }
-        if (opcion >= 1 && opcion <= recetario.cantidadRecetas()) {
-            return opcion - 1;
-        }
+        if (!leerEntero(opcion)) continue;
+        if (opcion == 0) return -1;
+        if (opcion >= 1 && opcion <= recetario.cantidadRecetas()) return opcion - 1;
         std::cout << "Indice invalido.\n";
     } while (true);
 }
@@ -133,29 +113,14 @@ void UserInterface::iniciarPrograma() {
         }
 
         switch (opcion) {
-            case 1:
-                menuVerRecetas();
-                break;
-            case 2:
-                menuAgregarReceta();
-                break;
-            case 3:
-                menuBuscarReceta();
-                break;
-            case 4:
-                menuAdministrarRecetas();
-                break;
-            case 5:
-                menuGuardarRecetario();
-                break;
-            case 6:
-                menuCargarRecetario();
-                break;
-            case 0:
-                std::cout << "Saliendo del programa...\n";
-                break;
-            default:
-                std::cout << "Opcion invalida. Intente de nuevo.\n";
+            case 1: menuVerRecetas(); break;
+            case 2: menuAgregarReceta(); break;
+            case 3: menuBuscarReceta(); break;
+            case 4: menuAdministrarRecetas(); break;
+            case 5: menuGuardarRecetario(); break;
+            case 6: menuCargarRecetario(); break;
+            case 0: std::cout << "Saliendo del programa...\n"; break;
+            default: std::cout << "Opcion invalida. Intente de nuevo.\n";
         }
     } while (opcion != 0);
 }
@@ -167,7 +132,7 @@ void UserInterface::menuAgregarReceta() {
     std::cout << "\n=== RECETARIO DIGITAL ===\n";
     std::cout << "== NUEVA RECETA ==\n";
     std::cout << "Datos de la receta:\n";
-
+    
     nombreReceta = leerTextoNoVacio("Nombre del platillo:\n> ");
     limpiarPantalla();
     std::cout << "Categoria:\n";
@@ -208,7 +173,7 @@ void UserInterface::menuAgregarReceta() {
     } while (respuesta == 'S');
 
     std::cout << "\nIngredientes agregados:\n";
-    nuevaReceta.mostrarIngredientes();
+    nuevaReceta.mostrarIngredientes(); 
 
     limpiarPantalla();
     std::cout << "\nPROCEDIMIENTO\n";
@@ -243,16 +208,14 @@ void UserInterface::menuAgregarReceta() {
     } else {
         std::cout << "\nOperacion cancelada.\n";
     }
-
+    
     pausarPantalla();
 }
 
 void UserInterface::mostrarRecetasYSeleccionar() {
     const Recetario& recetario = gestorRecetas.obtenerRecetario();
     int indice = seleccionarIndice(recetario, "Selecciona una receta para ver el detalle");
-    if (indice != -1) {
-        recetario.obtenerReceta(indice).mostrarRecetaCompleta();
-    }
+    if (indice != -1) recetario.obtenerReceta(indice).mostrarRecetaCompleta();
     pausarPantalla();
 }
 
@@ -261,14 +224,9 @@ void UserInterface::menuVerRecetas() {
     do {
         limpiarPantalla();
         std::cout << "=== RECETAS ===\n1. Mostrar todas\n2. Filtrar por categoria\n3. Ordenar por nombre\n4. Ordenar por tiempo\n0. Regresar\n> ";
-        if (!leerEntero(opcion)) {
-            pausarPantalla();
-            continue;
-        }
+        if (!leerEntero(opcion)) { pausarPantalla(); continue; }
         switch (opcion) {
-            case 1:
-                mostrarRecetasYSeleccionar();
-                break;
+            case 1: mostrarRecetasYSeleccionar(); break;
             case 2: {
                 limpiarPantalla();
                 std::cout << "Elige una categoria:\n";
@@ -277,26 +235,15 @@ void UserInterface::menuVerRecetas() {
                     const Recetario& recetario = gestorRecetas.obtenerRecetario();
                     recetario.filtrarPorCategoria(categoria);
                     int indice = seleccionarIndice(recetario, "Selecciona una receta para ver el detalle");
-                    if (indice != -1 && recetario.obtenerReceta(indice).getCategoria() == categoria) {
-                        recetario.obtenerReceta(indice).mostrarRecetaCompleta();
-                    }
+                    if (indice != -1 && recetario.obtenerReceta(indice).getCategoria() == categoria) recetario.obtenerReceta(indice).mostrarRecetaCompleta();
                     pausarPantalla();
                 }
                 break;
             }
-            case 3:
-                gestorRecetas.ordenarPorNombre();
-                mostrarRecetasYSeleccionar();
-                break;
-            case 4:
-                gestorRecetas.ordenarPorTiempo();
-                mostrarRecetasYSeleccionar();
-                break;
-            case 0:
-                break;
-            default:
-                std::cout << "Opcion invalida.\n";
-                pausarPantalla();
+            case 3: gestorRecetas.ordenarPorNombre(); mostrarRecetasYSeleccionar(); break;
+            case 4: gestorRecetas.ordenarPorTiempo(); mostrarRecetasYSeleccionar(); break;
+            case 0: break;
+            default: std::cout << "Opcion invalida.\n"; pausarPantalla();
         }
     } while (opcion != 0);
 }
@@ -306,19 +253,13 @@ void UserInterface::menuBuscarReceta() {
     do {
         limpiarPantalla();
         std::cout << "=== BUSCAR RECETA ===\n1. Por nombre\n2. Por categoria\n0. Regresar\n> ";
-        if (!leerEntero(opcion)) {
-            pausarPantalla();
-            continue;
-        }
+        if (!leerEntero(opcion)) { pausarPantalla(); continue; }
         const Recetario& recetario = gestorRecetas.obtenerRecetario();
         if (opcion == 1) {
             std::string nombre = leerTextoNoVacio("Nombre de la receta:\n> ");
             int indice = recetario.buscarPorNombre(nombre);
-            if (indice == -1) {
-                std::cout << "No se encontro una receta con ese nombre.\n";
-            } else {
-                recetario.obtenerReceta(indice).mostrarRecetaCompleta();
-            }
+            if (indice == -1) std::cout << "No se encontro una receta con ese nombre.\n";
+            else recetario.obtenerReceta(indice).mostrarRecetaCompleta();
             pausarPantalla();
         } else if (opcion == 2) {
             std::cout << "Elige una categoria:\n";
@@ -341,25 +282,18 @@ void UserInterface::modificarReceta(int indiceReceta) {
         limpiarPantalla();
         receta.mostrarRecetaCompleta();
         std::cout << "\n1. Modificar nombre\n2. Modificar categoria\n3. Modificar autor\n4. Modificar tiempo\n5. Modificar procedimiento\n6. Guardar cambios\n0. Cancelar\n> ";
-        if (!leerEntero(opcion)) {
-            pausarPantalla();
-            continue;
-        }
-        if (opcion == 1) {
-            receta.setNombre(leerTextoNoVacio("Nuevo nombre:\n> "));
-        } else if (opcion == 2) {
-            std::cout << "Nueva categoria:\n";
-            receta.setCategoria(seleccionarCategoria(false));
-        } else if (opcion == 3) {
+        if (!leerEntero(opcion)) { pausarPantalla(); continue; }
+        if (opcion == 1) receta.setNombre(leerTextoNoVacio("Nuevo nombre:\n> "));
+        else if (opcion == 2) { std::cout << "Nueva categoria:\n"; receta.setCategoria(seleccionarCategoria(false)); }
+        else if (opcion == 3) {
             // Se leen por separado: el orden de evaluacion de los argumentos de una funcion no esta garantizado
             std::string nombres = leerTextoNoVacio("Nombres:\n> ");
             std::string apellidos = leerTextoNoVacio("Apellidos:\n> ");
             receta.setAutor(Name(nombres, apellidos));
-        } else if (opcion == 4) {
+        }
+        else if (opcion == 4) {
             int tiempo;
-            do {
-                std::cout << "Nuevo tiempo en minutos:\n> ";
-            } while (!leerEntero(tiempo) || tiempo <= 0);
+            do { std::cout << "Nuevo tiempo en minutos:\n> "; } while (!leerEntero(tiempo) || tiempo <= 0);
             receta.setTiempoPreparacion(tiempo);
         } else if (opcion == 5) {
             int accion;
@@ -367,35 +301,25 @@ void UserInterface::modificarReceta(int indiceReceta) {
                 limpiarPantalla();
                 receta.mostrarRecetaCompleta();
                 std::cout << "\n1. Agregar paso\n2. Eliminar paso\n3. Modificar paso\n4. Eliminar todos los pasos\n0. Regresar\n> ";
-                if (!leerEntero(accion)) {
-                    continue;
-                }
+                if (!leerEntero(accion)) continue;
                 if (accion == 1) {
                     if (!receta.agregarPaso(Paso(receta.cantidadPasos() + 1, leerTextoNoVacio("Descripcion:\n> ")))) {
                         std::cout << "Se alcanzo el limite de 50 pasos.\n";
                         pausarPantalla();
                     }
-                } else if (accion == 2 || accion == 3) {
+                }
+                else if (accion == 2 || accion == 3) {
                     int indice;
                     std::cout << "Numero de paso (0 para cancelar): ";
                     bool indiceLeido = leerEntero(indice);
                     if (indiceLeido && indice > 0 && indice <= receta.cantidadPasos()) {
-                        if (accion == 2) {
-                            receta.eliminarPaso(indice - 1);
-                        } else {
-                            receta.modificarPaso(indice - 1, Paso(indice, leerTextoNoVacio("Nueva descripcion:\n> ")));
-                        }
-                    } else if (indiceLeido && indice != 0) {
-                        std::cout << "Paso invalido.\n";
-                    }
+                        if (accion == 2) receta.eliminarPaso(indice - 1);
+                        else receta.modificarPaso(indice - 1, Paso(indice, leerTextoNoVacio("Nueva descripcion:\n> ")));
+                    } else if (indiceLeido && indice != 0) std::cout << "Paso invalido.\n";
                 } else if (accion == 4) {
                     char respuesta;
-                    do {
-                        std::cout << "¿Eliminar todos los pasos? (S/N): ";
-                    } while (!leerRespuestaSiNo(respuesta));
-                    if (respuesta == 'S') {
-                        receta.vaciarPasos();
-                    }
+                    do { std::cout << "¿Eliminar todos los pasos? (S/N): "; } while (!leerRespuestaSiNo(respuesta));
+                    if (respuesta == 'S') receta.vaciarPasos();
                 }
             } while (accion != 0);
         } else if (opcion == 6) {
@@ -404,10 +328,7 @@ void UserInterface::modificarReceta(int indiceReceta) {
             std::cout << mensaje << "\n";
             pausarPantalla();
             return;
-        } else if (opcion != 0) {
-            std::cout << "Opcion invalida.\n";
-            pausarPantalla();
-        }
+        } else if (opcion != 0) { std::cout << "Opcion invalida.\n"; pausarPantalla(); }
     } while (opcion != 0);
 }
 
@@ -419,41 +340,28 @@ void UserInterface::administrarIngredientes(int indiceReceta) {
         std::cout << "=== INGREDIENTES DE " << receta.getNombre() << " ===\n";
         receta.mostrarIngredientes();
         std::cout << "\n1. Agregar ingrediente\n2. Eliminar ingrediente\n3. Eliminar todos\n4. Modificar cantidad\n0. Guardar y regresar\n> ";
-        if (!leerEntero(opcion)) {
-            continue;
-        }
+        if (!leerEntero(opcion)) continue;
         if (opcion == 1) {
             std::string nombre = leerTextoNoVacio("Ingrediente:\n> ");
             std::string cantidad = leerTextoNoVacio("Cantidad:\n> ");
             Ingrediente ingrediente(nombre, cantidad);
-            if (!receta.agregarIngrediente(ingrediente)) {
-                std::cout << "Se alcanzo el limite de 50 ingredientes.\n";
-            }
+            if (!receta.agregarIngrediente(ingrediente)) std::cout << "Se alcanzo el limite de 50 ingredientes.\n";
         } else if (opcion == 2 || opcion == 4) {
             int indice;
             std::cout << "Numero de ingrediente (0 para cancelar): ";
             bool indiceLeido = leerEntero(indice);
             if (indiceLeido && indice > 0 && indice <= receta.cantidadIngredientes()) {
-                if (opcion == 2) {
-                    receta.eliminarIngrediente(indice - 1);
-                } else {
+                if (opcion == 2) receta.eliminarIngrediente(indice - 1);
+                else {
                     Ingrediente anterior = receta.obtenerIngrediente(indice - 1);
                     receta.modificarIngrediente(indice - 1, Ingrediente(anterior.getNombre(), leerTextoNoVacio("Nueva cantidad:\n> ")));
                 }
-            } else if (indiceLeido && indice != 0) {
-                std::cout << "Ingrediente invalido.\n";
-            }
+            } else if (indiceLeido && indice != 0) std::cout << "Ingrediente invalido.\n";
         } else if (opcion == 3) {
             char respuesta;
-            do {
-                std::cout << "¿Eliminar todos los ingredientes? (S/N): ";
-            } while (!leerRespuestaSiNo(respuesta));
-            if (respuesta == 'S') {
-                receta.vaciarIngredientes();
-            }
-        } else if (opcion != 0) {
-            std::cout << "Opcion invalida.\n";
-        }
+            do { std::cout << "¿Eliminar todos los ingredientes? (S/N): "; } while (!leerRespuestaSiNo(respuesta));
+            if (respuesta == 'S') receta.vaciarIngredientes();
+        } else if (opcion != 0) std::cout << "Opcion invalida.\n";
     } while (opcion != 0);
     std::string mensaje;
     gestorRecetas.reemplazarReceta(indiceReceta, receta, mensaje);
@@ -544,9 +452,7 @@ void UserInterface::menuCargarRecetario() {
     do {
         std::cout << "Selecciona un archivo (0 para cancelar): ";
     } while (!leerEntero(opcion) || opcion < 0 || opcion > static_cast<int>(archivos.size()));
-    if (opcion == 0) {
-        return;
-    }
+    if (opcion == 0) return;
     char respuesta;
     do {
         std::cout << "Cargar este recetario reemplazara el actual. ¿Continuar? (S/N): ";

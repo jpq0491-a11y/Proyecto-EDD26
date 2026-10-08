@@ -1,0 +1,82 @@
+RECETARIO_V1
+5
+"Hotcakes con fruta" "Desayuno" "Maria" "Lopez" 20
+7
+"Harina para hotcakes" "1 taza"
+"Leche" "3/4 de taza"
+"Huevo" "1 pieza"
+"Mantequilla" "1 cucharada"
+"Platano" "1 pieza"
+"Fresas" "4 piezas"
+"Miel" "Al gusto"
+4
+1 "Mezcla la harina, la leche y el huevo hasta obtener una mezcla uniforme."
+2 "Calienta un sartén y agrega un poco de mantequilla."
+3 "Vierte una porción de mezcla y cocina por ambos lados."
+4 "Sirve los hotcakes con plátano, fresas y miel."
+"Enchiladas Verdes" "Comida" "Carlos" "Hernandez" 45
+10
+"Tortillas de Maiz" "12 piezas"
+"Pechuga de pollo cocida y desebrada" "2 tazas"
+"Tomate verde" "500 gramos"
+"Chile serrano" "2 piezas"
+"Cebolla" "1/4 de pieza"
+"Ajo" "1 diente"
+"Crema" "1/2 taza"
+"Queso fresco" "150 gramos"
+"Aceite" "2 cucharadas"
+"Sal" "Al gusto"
+7
+1 "Hierve los tomates verdes y los chiles durante diez minutos."
+2 "Licúa los tomates, los chiles, la cebolla, el ajo y la sal."
+3 "Fríe ligeramente la salsa en una olla."
+4 "Calienta las tortillas en un sartén con poco aceite."
+5 "Rellena cada tortilla con pollo y enróllala."
+6 "Baña las enchiladas con salsa verde."
+7 "Agrega crema y queso fresco antes de servir."
+"Quesadillas de Champinones" "Cena" "Ana" "Martinez" 15
+6
+"Tortillas de harina" "4 piezas"
+"Champinones rebanados" "250 gramos"
+"Queso manchego" "200 gramos"
+"Cebolla" "1/4 de pieza"
+"Aceite" "1 cucharada"
+"Sal y pimienta" "Al gusto"
+5
+1 "Pica la cebolla y sofríela con el aceite."
+2 "Agrega los champinones, sal y pimienta."
+3 "Cocina hasta que los champinones esten suaves."
+4 "Coloca queso y champinones sobre una tortilla."
+5 "Dobla la tortilla y cocina por ambos lados hasta que el queso se derrita."
+"Ensalada de Manzana" "Navideño" "Laura" "Ramirez" 25
+7
+"Manzanas" "4 piezas"
+"Pina en almibar" "1 taza"
+"Nuez picada" "1/2 taza"
+"Pasas" "1/2 taza"
+"Crema" "1 taza"
+"Leche condensada" "1/2 taza"
+"Cerezas en almibar" "10 piezas"
+6
+1 "Lava, pela y corta las manzanas en cubos pequenos."
+2 "Corta la pina en trozos pequenos."
+3 "Mezcla la crema con la leche condensada."
+4 "Agrega las manzanas, la pina, las nueces y las pasas."
+5 "Mezcla todos los ingredientes hasta integrarlos."
+6 "Decora con cerezas y refrigera antes de servir."
+"Tacos Dorados de Pollo" "Comida" "Diego" "Sanchez" 40
+8
+"Tortillas de maiz" "12 piezas"
+"Pechuga de pollo cocida" "2 tazas"
+"Lechuga" "1 pieza"
+"Crema" "1/2 taza"
+"Queso fresco" "150 gramos"
+"Salsa roja" "1 taza"
+"Aceite" "2 tazas"
+"Sal" "Al gusto"
+5
+1 "Deshebra la pechuga de pollo cocida."
+2 "Rellena las tortillas con pollo y enrollalas."
+3 "Frie los tacos en aceite caliente hasta que esten dorados."
+4 "Colocalos sobre papel absorbente para retirar el exceso de aceite."
+5 "Sirve con lechuga, crema, queso y salsa roja."
