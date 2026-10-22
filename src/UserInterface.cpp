@@ -82,6 +82,26 @@ int seleccionarIndice(const Recetario& recetario, const std::string& mensaje) {
         std::cout << "Indice invalido.\n";
     } while (true);
 }
+
+// Muestra solo las recetas de la categoria y solo acepta indices de esa lista.
+int seleccionarIndiceDeCategoria(const Recetario& recetario, const std::string& categoria, const std::string& mensaje) {
+    recetario.filtrarPorCategoria(categoria);
+    bool hayRecetas = false;
+    for (int i = 0; i < recetario.cantidadRecetas(); ++i) {
+        if (recetario.obtenerReceta(i).getCategoria() == categoria) hayRecetas = true;
+    }
+    if (!hayRecetas) return -1;
+
+    int opcion;
+    do {
+        std::cout << mensaje << " (0 para regresar): ";
+        if (!leerEntero(opcion)) continue;
+        if (opcion == 0) return -1;
+        if (opcion >= 1 && opcion <= recetario.cantidadRecetas() &&
+            recetario.obtenerReceta(opcion - 1).getCategoria() == categoria) return opcion - 1;
+        std::cout << "Indice invalido. Elige una receta de la lista.\n";
+    } while (true);
+}
 }
 
 UserInterface::UserInterface() {
@@ -155,11 +175,8 @@ void UserInterface::menuAgregarReceta() {
     std::cout << "\nINGREDIENTES\n";
     char respuesta;
     do {
-        std::string nomIng, cantIng;
-        std::cout << "Ingrediente:\n> ";
-        std::getline(std::cin, nomIng);
-        std::cout << "Cantidad:\n> ";
-        std::getline(std::cin, cantIng);
+        std::string nomIng = leerTextoNoVacio("Ingrediente:\n> ");
+        std::string cantIng = leerTextoNoVacio("Cantidad:\n> ");
 
         Ingrediente ing(nomIng, cantIng);
         if (!nuevaReceta.agregarIngrediente(ing)) {
@@ -173,15 +190,14 @@ void UserInterface::menuAgregarReceta() {
     } while (respuesta == 'S');
 
     std::cout << "\nIngredientes agregados:\n";
-    nuevaReceta.mostrarIngredientes(); 
+    nuevaReceta.mostrarIngredientes();
+    pausarPantalla();
 
     limpiarPantalla();
     std::cout << "\nPROCEDIMIENTO\n";
     int numPaso = 1;
     do {
-        std::string descPaso;
-        std::cout << "Paso " << numPaso << ":\n> ";
-        std::getline(std::cin, descPaso);
+        std::string descPaso = leerTextoNoVacio("Paso " + std::to_string(numPaso) + ":\n> ");
 
         Paso p(numPaso, descPaso);
         if (!nuevaReceta.agregarPaso(p)) {
@@ -233,9 +249,8 @@ void UserInterface::menuVerRecetas() {
                 std::string categoria = seleccionarCategoria(true);
                 if (!categoria.empty()) {
                     const Recetario& recetario = gestorRecetas.obtenerRecetario();
-                    recetario.filtrarPorCategoria(categoria);
-                    int indice = seleccionarIndice(recetario, "Selecciona una receta para ver el detalle");
-                    if (indice != -1 && recetario.obtenerReceta(indice).getCategoria() == categoria) recetario.obtenerReceta(indice).mostrarRecetaCompleta();
+                    int indice = seleccionarIndiceDeCategoria(recetario, categoria, "Selecciona una receta para ver el detalle");
+                    if (indice != -1) recetario.obtenerReceta(indice).mostrarRecetaCompleta();
                     pausarPantalla();
                 }
                 break;
