@@ -15,7 +15,7 @@ std::string normalizar(const std::string& texto) {
 Recetario::Recetario() {}
 
 bool Recetario::agregarReceta(const Receta& nuevaReceta) {
-    if (listaRecetas.isFull() || buscarPorNombre(nuevaReceta.getNombre()) != -1) {
+    if (buscarPorNombre(nuevaReceta.getNombre()) != -1) {
         return false;
     }
     return listaRecetas.insert(nuevaReceta, listaRecetas.lastPos() + 1);
@@ -83,12 +83,11 @@ Receta Recetario::obtenerReceta(int indice) const {
 
 int Recetario::cantidadRecetas() const { return listaRecetas.lastPos() + 1; }
 bool Recetario::estaVacio() const { return listaRecetas.isEmpty(); }
-bool Recetario::estaLleno() const { return listaRecetas.isFull(); }
 
 void Recetario::ordenarPorNombre() { listaRecetas.insertSort(); }
 
 void Recetario::ordenarPorTiempo() {
-    List<Receta, 50> ordenadas;
+    List<Receta> ordenadas;
     for (int i = 0; i < cantidadRecetas(); ++i) {
         Receta actual = listaRecetas.retrieve(i);
         int posicion = ordenadas.lastPos() + 1;

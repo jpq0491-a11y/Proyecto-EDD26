@@ -3,12 +3,12 @@
 const Recetario& ServicioRecetario::obtenerRecetario() const { return recetario; }
 
 bool ServicioRecetario::agregarReceta(const Receta& receta, std::string& mensaje) {
-    if (recetario.estaLleno()) {
-        mensaje = "El recetario alcanzo su capacidad maxima de 50 recetas.";
+    if (recetario.buscarPorNombre(receta.getNombre()) != -1) {
+        mensaje = "Ya existe una receta con ese nombre.";
         return false;
     }
     if (!recetario.agregarReceta(receta)) {
-        mensaje = "Ya existe una receta con ese nombre.";
+        mensaje = "No hay memoria suficiente para guardar la receta.";
         return false;
     }
     mensaje = "Receta guardada con exito.";

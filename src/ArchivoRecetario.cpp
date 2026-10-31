@@ -58,7 +58,7 @@ bool ArchivoRecetario::cargar(const std::string& nombreArchivo, Recetario& recet
     std::ifstream entrada(rutaArchivo(nombreArchivo));
     std::string encabezado;
     int totalRecetas;
-    if (!entrada || !(entrada >> encabezado >> totalRecetas) || encabezado != "RECETARIO_V1" || totalRecetas < 0 || totalRecetas > 50) {
+    if (!entrada || !(entrada >> encabezado >> totalRecetas) || encabezado != "RECETARIO_V1" || totalRecetas < 0) {
         mensaje = "El archivo no tiene un formato de recetario valido.";
         return false;
     }

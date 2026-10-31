@@ -113,7 +113,7 @@ std::istream& operator>>(std::istream& is, Receta& r) {
     Name autor;
     int tiempo, totalIngredientes, totalPasos;
     if (!(is >> std::quoted(nombre) >> std::quoted(categoria) >> autor >> tiempo >> totalIngredientes) ||
-        tiempo <= 0 || totalIngredientes < 0 || totalIngredientes > 50) {
+        tiempo <= 0 || totalIngredientes < 0) {
         is.setstate(std::ios::failbit);
         return is;
     }
@@ -125,7 +125,7 @@ std::istream& operator>>(std::istream& is, Receta& r) {
             return is;
         }
     }
-    if (!(is >> totalPasos) || totalPasos < 0 || totalPasos > 50) {
+    if (!(is >> totalPasos) || totalPasos < 0) {
         is.setstate(std::ios::failbit);
         return is;
     }

@@ -14,8 +14,8 @@ private:
     std::string categoria;
     Name autor;
     int tiempoPreparacion;
-    List<Ingrediente, 50> listaIngredientes; // Plantilla de ingredientes
-    List<Paso, 50> procedimiento;            // Plantilla de pasos
+    List<Ingrediente> listaIngredientes; // Plantilla de ingredientes
+    List<Paso> procedimiento;            // Plantilla de pasos
 
 public:
     // Constructores

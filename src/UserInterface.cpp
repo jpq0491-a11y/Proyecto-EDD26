@@ -117,7 +117,7 @@ void UserInterface::iniciarPrograma() {
     int opcion;
     do {
         limpiarPantalla();
-        std::cout << "\n=== RECETARIO DIGITAL ===\n";
+        std::cout << "=== RECETARIO DIGITAL ===\n";
         std::cout << "MENU PRINCIPAL\n";
         std::cout << "1. Ver recetas\n";
         std::cout << "2. Agregar receta\n";
@@ -149,7 +149,7 @@ void UserInterface::menuAgregarReceta() {
     std::string nombreReceta, autorNombre, autorApellido, catStr;
     int tiempo;
     limpiarPantalla();
-    std::cout << "\n=== RECETARIO DIGITAL ===\n";
+    std::cout << "=== RECETARIO DIGITAL ===\n";
     std::cout << "== NUEVA RECETA ==\n";
     std::cout << "Datos de la receta:\n";
     
@@ -180,7 +180,7 @@ void UserInterface::menuAgregarReceta() {
 
         Ingrediente ing(nomIng, cantIng);
         if (!nuevaReceta.agregarIngrediente(ing)) {
-            std::cout << "No se pueden agregar mas de 50 ingredientes.\n";
+            std::cout << "No hay memoria suficiente para agregar el ingrediente.\n";
             break;
         }
 
@@ -201,7 +201,7 @@ void UserInterface::menuAgregarReceta() {
 
         Paso p(numPaso, descPaso);
         if (!nuevaReceta.agregarPaso(p)) {
-            std::cout << "No se pueden agregar mas de 50 pasos.\n";
+            std::cout << "No hay memoria suficiente para agregar el paso.\n";
             break;
         }
         numPaso++;
@@ -319,7 +319,7 @@ void UserInterface::modificarReceta(int indiceReceta) {
                 if (!leerEntero(accion)) continue;
                 if (accion == 1) {
                     if (!receta.agregarPaso(Paso(receta.cantidadPasos() + 1, leerTextoNoVacio("Descripcion:\n> ")))) {
-                        std::cout << "Se alcanzo el limite de 50 pasos.\n";
+                        std::cout << "No hay memoria suficiente para agregar el paso.\n";
                         pausarPantalla();
                     }
                 }
@@ -360,7 +360,7 @@ void UserInterface::administrarIngredientes(int indiceReceta) {
             std::string nombre = leerTextoNoVacio("Ingrediente:\n> ");
             std::string cantidad = leerTextoNoVacio("Cantidad:\n> ");
             Ingrediente ingrediente(nombre, cantidad);
-            if (!receta.agregarIngrediente(ingrediente)) std::cout << "Se alcanzo el limite de 50 ingredientes.\n";
+            if (!receta.agregarIngrediente(ingrediente)) std::cout << "No hay memoria suficiente para agregar el ingrediente.\n";
         } else if (opcion == 2 || opcion == 4) {
             int indice;
             std::cout << "Numero de ingrediente (0 para cancelar): ";

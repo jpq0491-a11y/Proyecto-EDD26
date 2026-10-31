@@ -7,7 +7,7 @@
 
 class Recetario {
 private:
-    List<Receta, 50> listaRecetas; // Tu lista estática principal
+    List<Receta> listaRecetas; // Lista ligada principal
 
 public:
     Recetario();
@@ -21,7 +21,6 @@ public:
     Receta obtenerReceta(int indice) const;
     int cantidadRecetas() const;
     bool estaVacio() const;
-    bool estaLleno() const;
     void ordenarPorNombre();
     void ordenarPorTiempo();
     void vaciarRecetario();
